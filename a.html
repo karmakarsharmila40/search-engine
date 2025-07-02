@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APM Institute of Science Search Engine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated science background elements */
+        .science-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        
+        .atom {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            animation: rotate 30s infinite linear;
+        }
+        
+        .electron {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #FFD43B;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px #FFD43B;
+        }
+        
+        .orbit {
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+        
+        .orbit:nth-child(1) {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .orbit:nth-child(2) {
+            width: 80px;
+            height: 40px;
+            transform: rotate(45deg);
+        }
+        
+        .orbit:nth-child(3) {
+            width: 100px;
+            height: 60px;
+            transform: rotate(70deg);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-100px) translateX(100px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(16, 42, 67, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeIn 0.8s forwards 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin: 0 10px;
+            color: #4FC3F7;
+            text-shadow: 0 0 15px rgba(79, 195, 247, 0.5);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #4FC3F7, #29B6F6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            font-weight: 300;
+            color: #E0F7FA;
+        }
+        
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 18px 25px;
+            padding-left: 60px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            outline: none;
+            color: #333;
+        }
+        
+        .search-input:focus {
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.25);
+            transform: translateY(-2px);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2196F3;
+            font-size: 1.4rem;
+        }
+        
+        .search-btn {
+            background: linear-gradient(to right, #29B6F6, #0288D1);
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(41, 182, 246, 0.4);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(41, 182, 246, 0.6);
+            background: linear-gradient(to right, #0288D1, #29B6F6);
+        }
+        
+        .search-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .search-btn i {
+            margin-left: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .quick-searches {
+            margin-top: 50px;
+            width: 100%;
+        }
+        
+        .quick-searches h3 {
+            font-weight: 500;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            opacity: 0.9;
+            color: #E0F7FA;
+        }
+        
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .quick-link {
+            background: rgba(41, 182, 246, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(41, 182, 246, 0.3);
+        }
+        
+        .quick-link:hover {
+            background: rgba(41, 182, 246, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(41, 182, 246, 0.2);
+        }
+        
+        .search-suggestions {
+            position: absolute;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            margin-top: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 10;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .suggestion-item {
+            padding: 12px 20px;
+            text-align: left;
+            color: #333;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .suggestion-item:hover {
+            background: #f0f8ff;
+        }
+        
+        .suggestion-item i {
+            margin-right: 10px;
+            color: #29B6F6;
+        }
+        
+        .search-history {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            display: none;
+        }
+        
+        .history-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #E0F7FA;
+        }
+        
+        .history-title h3 {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .clear-history {
+            background: transparent;
+            border: none;
+            color: #FF5252;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .history-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .history-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .history-item i {
+            margin-right: 5px;
+            font-size: 0.8rem;
+        }
+        
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            color: #E0F7FA;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .logo {
+                font-size: 2.8rem;
+            }
+            
+            .search-input {
+                padding: 15px 20px;
+                padding-left: 50px;
+                font-size: 1rem;
+            }
+            
+            .search-icon {
+                left: 20px;
+                font-size: 1.2rem;
+            }
+            
+            .search-btn {
+                padding: 14px 35px;
+                font-size: 1rem;
+            }
+            
+            .quick-links {
+                gap: 10px;
+            }
+            
+            .quick-link {
+                padding: 8px 15px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated science background -->
+    <div class="science-bg" id="scienceBg"></div>
+    
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-atom"></i>
+            <span>APM Search</span>
+            <i class="fas fa-flask"></i>
+        </div>
+        <h1>Institute of Science</h1>
+        <p class="subtitle">Scientific Discovery Starts Here</p>
+        
+        <form id="searchForm" class="search-form">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search scientific topics, research, and more..." required autocomplete="off">
+                <div class="search-suggestions" id="searchSuggestions">
+                    <!-- Suggestions will appear here -->
+                </div>
+            </div>
+            <button type="submit" class="search-btn">Search <i class="fas fa-arrow-right"></i></button>
+        </form>
+        
+        <div class="quick-searches">
+            <h3>Popular Scientific Searches:</h3>
+            <div class="quick-links">
+                <div class="quick-link">Quantum Physics</div>
+                <div class="quick-link">Biotechnology</div>
+                <div class="quick-link">Space Exploration</div>
+                <div class="quick-link">Climate Science</div>
+                <div class="quick-link">Artificial Intelligence</div>
+                <div class="quick-link">Quantum optics</div>
+                <div class="quick-link">Astrophysics</div>
+                <div class="quick-link">Genetic engineering</div>
+                <div class="quick-link">Nanotechnology advancements</div>
+                <div class="quick-link">Renewable energy solutions</div>
+                <div class="quick-link">Genetics and DNA research</div>
+                <div class="quick-link">Astrophysics discoveries</div>
+                <div class="quick-link">Robotics engineering</div>
+                <div class="quick-link">Environmental Science</div>
+                <div class="quick-link">Marine Biology</div>
+                <div class="quick-link">Neuroscience breakthroughs</div>
+                <div class="quick-link">Materials Science Innovations</div>
+                <div class="quick-link">Particle Physics</div>
+            </div>
+        </div>
+        
+        <div class="search-history" id="searchHistory">
+            <div class="history-title">
+                <h3><i class="fas fa-history"></i> Recent Searches</h3>
+                <button class="clear-history" id="clearHistory">Clear All</button>
+            </div>
+            <div class="history-items" id="historyItems">
+                <!-- History items will appear here -->
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>APM Institute of Science Search Engine | Independent Scientific Search</p>
+    </footer>
+    
+    <script>
+        // Create science background elements
+        function createScienceBackground() {
+            const scienceBg = document.getElementById('scienceBg');
+            
+            // Create particles
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 10 + 5;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const animationDuration = Math.random() * 20 + 10;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.top = `${top}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                
+                scienceBg.appendChild(particle);
+            }
+            
+            // Create atoms
+            for (let i = 0; i < 5; i++) {
+                const atom = document.createElement('div');
+                atom.classList.add('atom');
+                
+                // Random properties
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const animationDuration = Math.random() * 40 + 20;
+                
+                atom.style.left = `${left}%`;
+                atom.style.top = `${top}%`;
+                atom.style.animationDuration = `${animationDuration}s`;
+                
+                // Add electron
+                const electron = document.createElement('div');
+                electron.classList.add('electron');
+                atom.appendChild(electron);
+                
+                // Add orbits
+                for (let j = 0; j < 3; j++) {
+                    const orbit = document.createElement('div');
+                    orbit.classList.add('orbit');
+                    atom.appendChild(orbit);
+                }
+                
+                scienceBg.appendChild(atom);
+            }
+        }
+        
+        // Search history management
+        function getSearchHistory() {
+            return JSON.parse(localStorage.getItem('apmSearchHistory')) || [];
+        }
+        
+        function saveSearchHistory(history) {
+            localStorage.setItem('apmSearchHistory', JSON.stringify(history));
+        }
+        
+        function addToSearchHistory(query) {
+            if (!query.trim()) return;
+            
+            let history = getSearchHistory();
+            
+            // Remove if already exists
+            history = history.filter(item => item !== query);
+            
+            // Add to beginning
+            history.unshift(query);
+            
+            // Limit to 10 items
+            if (history.length > 10) {
+                history = history.slice(0, 10);
+            }
+            
+            saveSearchHistory(history);
+            updateHistoryDisplay();
+        }
+        
+        function clearSearchHistory() {
+            localStorage.removeItem('apmSearchHistory');
+            updateHistoryDisplay();
+        }
+        
+        function updateHistoryDisplay() {
+            const history = getSearchHistory();
+            const historyItems = document.getElementById('historyItems');
+            const historyContainer = document.getElementById('searchHistory');
+            
+            if (history.length === 0) {
+                historyContainer.style.display = 'none';
+                return;
+            }
+            
+            historyContainer.style.display = 'block';
+            historyItems.innerHTML = '';
+            
+            history.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.classList.add('history-item');
+                historyItem.innerHTML = `<i class="fas fa-clock"></i> ${item}`;
+                
+                historyItem.addEventListener('click', () => {
+                    document.getElementById('searchInput').value = item;
+                    document.getElementById('searchInput').focus();
+                });
+                
+                historyItems.appendChild(historyItem);
+            });
+        }
+        
+        // Search suggestions
+        function showSuggestions() {
+            const input = document.getElementById('searchInput');
+            const suggestions = document.getElementById('searchSuggestions');
+            
+            if (!input.value.trim()) {
+                suggestions.style.display = 'none';
+                return;
+            }
+            
+            // In a real implementation, this would fetch from an API
+            // For demo, we'll use static suggestions
+            const scienceSuggestions = [
+                "Quantum mechanics",
+                "Biotechnology research",
+                "Space exploration news",
+                "Climate change studies",
+                "Artificial intelligence",
+                "Quantum optics",
+                "Astrophysics",
+                "Genetic engineering",
+                "Nanotechnology advancements",
+                "Renewable energy solutions",
+                "Genetics and DNA research",
+                "Astrophysics discoveries",
+                "Robotics engineering",
+                "Environmental science",
+                "Marine biology",
+                "Neuroscience breakthroughs",
+                "Materials science innovations",
+                "Particle physics",
+                "Astrobiology",
+                "Geology and Earth sciences",
+                "Chemistry in everyday life",
+                "Mathematical modeling in science",
+                "Scientific computing",
+                "Data science in research",
+                "Medical research and healthcare",
+                "Ecology and biodiversity",
+                "Physics of materials",
+                "Sustainable agriculture",
+                "Astrophysics and cosmology",
+                "Climate modeling and simulations",
+                "Artificial intelligence in healthcare",
+                "Quantum computing",
+                "Space missions and exploration",
+                "Biological engineering",
+                "Synthetic biology",
+                "Environmental chemistry",
+                "Geophysics",
+                "Oceanography",
+                "Astrophysical phenomena",
+                "Theoretical physics",
+                "Chemical engineering",
+                "Biomedical engineering",
+                "Genomics and proteomics",
+                "Microbiology and virology",
+                "Astrobiology and the search for extraterrestrial life",
+                "Renewable energy technologies",
+                "Climate change mitigation strategies",
+                "Nanomaterials and their applications",
+                "Robotics in manufacturing",
+                "Artificial intelligence ethics",
+                "Machine learning in science",
+                "Data visualization in research",
+                "Scientific communication",
+                "Interdisciplinary research in science",
+                "Science policy and funding",
+                "Public health research",
+                "Pharmaceutical sciences",
+                "Environmental impact assessments",
+                "Geospatial analysis in environmental science",
+                "Astrobiology and planetary science",
+                "Physics of fluids",
+                "Chemical reactions and kinetics",
+                "Biochemistry and molecular biology",
+                "Ecological modeling",
+                "Evolutionary biology",
+                "Scientific instrumentation",
+                "Astrophysical simulations",
+                "Computational chemistry",
+                "Materials characterization techniques",
+                "Physics of semiconductors",
+                "Chemical synthesis methods",
+                "Biomedical imaging techniques",
+                "Genetic engineering techniques",
+                "Microbial ecology",
+                "Virology and vaccine development",
+                "Astrophysical observations",
+                "Quantum physics experiments",
+                "Space weather and its effects",
+                "Climate change adaptation strategies",
+                "Nanotechnology in medicine",
+                "Renewable energy storage solutions",
+                "Artificial intelligence applications in science",
+                "Quantum entanglement",
+                "Astrophysics and dark matter",
+                "Genetic modification in agriculture",
+                "Nanotechnology in electronics",
+                "Renewable energy policy",
+                "Artificial intelligence in robotics",
+                "Quantum cryptography",
+                "Astrophysics and black holes",
+                "Genetic engineering ethics",   
+                "Nanotechnology in materials science",
+                "Renewable energy innovations",
+                "Artificial intelligence in data analysis",
+                "Quantum mechanics in technology",
+                "Astrophysics and gravitational waves",
+                "Genetic engineering in medicine",
+                "Nanotechnology in environmental science",
+                "Renewable energy systems",
+                "Artificial intelligence in natural language processing",
+                "Quantum physics and quantum computing",
+                "Astrophysics and exoplanets",
+                "Genetic engineering in synthetic biology",
+                "Nanotechnology in drug delivery",
+                "Renewable energy and sustainability",
+                "Artificial intelligence in computer vision",
+                "Quantum physics and quantum optics",
+                "Astrophysics and cosmology",
+                "Genetic engineering in biotechnology",
+                "Nanotechnology in energy storage",
+                "Renewable energy and smart grids",
+                "Artificial intelligence in autonomous systems",
+                "Quantum physics and quantum information",
+                "Astrophysics and the universe",
+                "Genetic engineering in agriculture",
+                "Nanotechnology in sensors",
+                "Renewable energy and climate change",
+                "Artificial intelligence in healthcare",
+                "Quantum physics and quantum mechanics",
+                "Astrophysics and the Big Bang",
+                "Genetic engineering in gene therapy",
+                "Nanotechnology in nanomedicine",
+                "Renewable energy and energy efficiency",
+                "Artificial intelligence in predictive analytics",
+                "Quantum physics and quantum entanglement",
+                "Astrophysics and the multiverse",
+                "Genetic engineering in CRISPR technology", 
+                "Nanotechnology in nanomaterials",          
+                "Renewable energy and carbon capture",  
+                "Artificial intelligence in machine learning",
+                "Quantum physics and quantum teleportation",
+                "Astrophysics and cosmic rays",
+                "Genetic engineering in synthetic organisms",
+                "Nanotechnology in nanostructures",
+                "Renewable energy and biofuels",
+                "Artificial intelligence in robotics engineering",
+                "Quantum physics and quantum field theory",
+                "Astrophysics and the observable universe",
+                "Genetic engineering in personalized medicine",
+                "Nanotechnology in nanocomposites",
+                "Renewable energy and solar power",
+                "Artificial intelligence in deep learning",
+                "Quantum physics and quantum gravity",
+                "Astrophysics and the cosmic microwave background",         
+                "Genetic engineering in agricultural biotechnology",
+                "Nanotechnology in nanophotonics",  
+                "Renewable energy and wind power",
+                "Artificial intelligence in reinforcement learning",
+                "Quantum physics and quantum chaos",
+                "Astrophysics and the expansion of the universe",
+                "Genetic engineering in synthetic biology applications",        
+                "Nanotechnology in nanobiotechnology",
+                "Renewable energy and hydropower",
+                "Artificial intelligence in natural language understanding",
+                "Quantum physics and quantum optics experiments",
+                "Astrophysics and the structure of the universe",
+                "Genetic engineering in gene editing",
+                "Nanotechnology in nanofabrication",
+                "Renewable energy and geothermal energy",
+                "Artificial intelligence in computer vision applications",
+                "Quantum physics and quantum mechanics applications",
+                "Astrophysics and the formation of galaxies",
+                "Genetic engineering in agricultural research",
+                "Nanotechnology in nanomaterials applications",
+                "Renewable energy and tidal energy",
+                "Artificial intelligence in speech recognition",
+                "Quantum physics and quantum computing applications",
+                "Astrophysics and the lifecycle of stars",
+                "Genetic engineering in medical research",
+                "Nanotechnology in nanomedicine applications",
+                "Renewable energy and ocean energy",
+                "Artificial intelligence in data science",
+                "Quantum physics and quantum information theory",
+                "Astrophysics and the nature of dark energy",       
+                "Genetic engineering in biotechnology applications",
+                "Nanotechnology in nanostructured materials",
+                "Renewable energy and sustainable technologies",
+                "Artificial intelligence in predictive modeling",
+                "Quantum physics and quantum optics theory",
+                "Astrophysics and the evolution of the universe",
+                "Genetic engineering in synthetic biology research",
+                "Nanotechnology in nanotechnology applications",
+                "Renewable energy and sustainable energy systems",
+                "Artificial intelligence in machine learning applications",
+                "Quantum physics and quantum mechanics theory",
+                "Astrophysics and the nature of black holes",
+                "Genetic engineering in gene therapy applications",
+                "Nanotechnology in nanotechnology research",
+                "Renewable energy and sustainable energy solutions",
+                "Artificial intelligence in robotics applications",
+                "Quantum physics and quantum field theory applications",
+                "Astrophysics and the nature of the universe",
+                "Genetic engineering in agricultural biotechnology research",
+                "Nanotechnology in nanotechnology innovations",
+                "Renewable energy and sustainable energy innovations",
+                "Artificial intelligence in deep learning applications",
+                "Quantum physics and quantum teleportation applications",
+                "Astrophysics and the nature of cosmic rays",
+                "Genetic engineering in synthetic organisms research",
+                "Nanotechnology in nanotechnology advancements",
+                "Renewable energy and sustainable energy advancements",
+                "Artificial intelligence in natural language processing applications",
+                "Quantum physics and quantum entanglement applications",
+                "Astrophysics and the nature of the multiverse",
+                "Genetic engineering in CRISPR technology research",
+                "Nanotechnology in nanotechnology breakthroughs",
+                "Renewable energy and sustainable energy breakthroughs",
+                "Artificial intelligence in predictive analytics applications",
+                "Quantum physics and quantum chaos theory",
+                "Astrophysics and the nature of cosmic microwave background",
+                "Genetic engineering in personalized medicine research",
+                "Nanotechnology in nanotechnology applications",
+                "Renewable energy and sustainable energy applications",
+                "Artificial intelligence in autonomous systems applications",
+                "Quantum physics and quantum information applications",
+                "Astrophysics and the nature of the observable universe",
+                "Genetic engineering in gene editing research",
+                "Nanotechnology in nanotechnology innovations",
+                "Renewable energy and sustainable energy innovations",
+                "Artificial intelligence in computer vision research",
+                "Quantum physics and quantum mechanics innovations",
+                "Astrophysics and the nature of the Big Bang",
+                "Genetic engineering in agricultural biotechnology innovations",    
+                "Nanotechnology in nanotechnology research",    
+                "Renewable energy and sustainable energy research", 
+                "Artificial intelligence in machine learning research",
+                "Quantum physics and quantum optics innovations",
+                "Astrophysics and the nature of the universe",  
+                "Genetic engineering in biotechnology innovations",
+                "Nanotechnology in nanotechnology breakthroughs",
+                "Renewable energy and sustainable energy breakthroughs",    
+                "Artificial intelligence in robotics innovations",
+                "Quantum physics and quantum field theory innovations", 
+                "Astrophysics and the nature of dark matter",
+                "Genetic engineering in synthetic biology innovations", 
+                "Nanotechnology in nanotechnology advancements",
+                "Renewable energy and sustainable energy advancements",
+                "Artificial intelligence in data science innovations",
+                "Quantum physics and quantum mechanics advancements",
+                "Astrophysics and the nature of gravitational waves",
+                "Genetic engineering in gene therapy innovations",
+                "Nanotechnology in nanomedicine innovations",
+                "Renewable energy and sustainable energy solutions",
+                "Artificial intelligence in predictive modeling innovations",
+                "Quantum physics and quantum optics advancements",
+                "Astrophysics and the nature of the universe's expansion",
+                "Genetic engineering in agricultural biotechnology advancements",
+                "Nanotechnology in nanotechnology applications",
+                "Renewable energy and sustainable energy applications",
+                "Artificial intelligence in natural language understanding innovations",
+                "Quantum physics and quantum teleportation advancements",
+                "Astrophysics and the nature of cosmic rays",
+                "Genetic engineering in synthetic organisms advancements",
+                "Nanotechnology in nanotechnology breakthroughs",   
+                "Renewable energy and sustainable energy breakthroughs",
+                "Artificial intelligence in deep learning innovations",
+                "Quantum physics and quantum chaos advancements",
+                "Astrophysics and the nature of cosmic microwave background",
+                "Genetic engineering in personalized medicine advancements",
+                "Nanotechnology in nanotechnology research",
+                "Renewable energy and sustainable energy research",
+                "Artificial intelligence in autonomous systems innovations",
+                "Quantum physics and quantum information advancements",
+                "Astrophysics and the nature of the observable universe",
+                "Genetic engineering in gene editing advancements",
+                "Nanotechnology in nanotechnology innovations",
+                "Renewable energy and sustainable energy innovations",
+                "Artificial intelligence in computer vision innovations",
+                "Quantum physics and quantum mechanics innovations",
+                "Astrophysics and the nature of the Big Bang",
+                "Genetic engineering in agricultural biotechnology innovations",
+                "Nanotechnology in nanotechnology research",
+                "Renewable energy and sustainable energy research",
+                "Artificial intelligence in machine learning innovations",
+                "Quantum physics and quantum optics innovations",
+                "Astrophysics and the nature of the universe",
+                "Genetic engineering in biotechnology innovations",
+                "Nanotechnology in nanotechnology breakthroughs",
+                "Renewable energy and sustainable energy breakthroughs",
+                "Artificial intelligence in robotics innovations",
+                "Quantum physics and quantum field theory innovations",
+                "Astrophysics and the nature of dark matter",
+                "Genetic engineering in synthetic biology innovations",
+                "Nanotechnology in nanotechnology advancements",
+                "Renewable energy and sustainable energy advancements",
+                "Artificial intelligence in data science innovations",
+                "Quantum physics and quantum mechanics advancements",
+                "Astrophysics and the nature of gravitational waves",
+                "Genetic engineering in gene therapy innovations",
+                "Nanotechnology in nanomedicine innovations",
+                "Renewable energy and sustainable energy solutions",
+                "Artificial intelligence in predictive modeling innovations",
+                "Quantum physics and quantum optics advancements",
+                "Astrophysics and the nature of the universe's expansion",
+                "Genetic engineering in agricultural biotechnology advancements",
+                "Nanotechnology in nanotechnology applications",
+                "Renewable energy and sustainable energy applications",
+                "Artificial intelligence in natural language understanding innovations",
+                "Quantum physics and quantum teleportation advancements",
+                "Astrophysics and the nature of cosmic rays",
+                "Genetic engineering in synthetic organisms advancements",
+                "Nanotechnology in nanotechnology breakthroughs",
+                "Renewable energy and sustainable energy breakthroughs",
+                "Artificial intelligence in deep learning innovations",
+                "Quantum physics and quantum chaos advancements",
+                "Astrophysics and the nature of cosmic microwave background",
+                "Genetic engineering in personalized medicine advancements",
+                "Nanotechnology in nanotechnology research",
+                "Renewable energy and sustainable energy research",
+                "Artificial intelligence in autonomous systems innovations",
+                "Quantum physics and quantum information advancements",
+                "Astrophysics and the nature of the observable universe",
+                "Genetic engineering in gene editing advancements",
+                "Nanotechnology in nanotechnology innovations",
+                "Renewable energy and sustainable energy innovations",
+                "Artificial intelligence in computer vision innovations",
+                "Quantum physics and quantum mechanics innovations",
+                "Astrophysics and the nature of the Big Bang",
+                "Genetic engineering in agricultural biotechnology innovations",
+                "Nanotechnology in nanotechnology research",
+                "Renewable energy and sustainable energy research",
+                "Artificial intelligence in machine learning innovations",
+                "Quantum physics and quantum optics innovations",
+                "Astrophysics and the nature of the universe",
+                "Genetic engineering in biotechnology innovations",
+                "Nanotechnology in nanotechnology breakthroughs",
+                "Renewable energy and sustainable energy breakthroughs",
+                "Artificial intelligence in robotics innovations",
+                "Quantum physics and quantum field theory innovations",
+                "Astrophysics and the nature of dark matter",
+                "Genetic engineering in synthetic biology innovations",
+                "Nanotechnology in nanotechnology advancements",
+                "Renewable energy and sustainable energy advancements",
+                "Artificial intelligence in data science innovations",
+                "Quantum physics and quantum mechanics advancements",
+                "Astrophysics and the nature of gravitational waves",
+                "Genetic engineering in gene therapy innovations",
+                "Nanotechnology in nanomedicine innovations",
+                "Renewable energy and sustainable energy solutions",
+                "Artificial intelligence in predictive modeling innovations",
+                "Quantum physics and quantum optics advancements",
+                "Astrophysics and the nature of the universe's expansion",
+                "Genetic engineering in agricultural biotechnology advancements",
+                "Nanotechnology in nanotechnology applications",
+                "newable energy and sustainable energy applications",
+                "Artificial intelligence in natural language understanding innovations",
+                "newtonian physics",
+                "relativity theory",
+                "thermodynamics",
+                "electromagnetism",
+                "quantum field theory",
+                "string theory",
+                "chaos theory",
+                "biophysics",
+                "newtonian mechanics",
+                "relativity and spacetime",
+                "newton's laws of motion",
+                "thermodynamic cycles",
+                "electromagnetic waves",
+                "quantum entanglement",
+                "string theory and cosmology",
+                "chaos in dynamical systems",
+                "classical mechanics", 
+                "thermodynamics", 
+                "statistical mechanics", 
+                "electromagnetism", 
+                "optics", 
+                "acoustics", 
+                "special relativity", 
+                "general relativity", 
+                "quantum mechanics", 
+                "quantum field theory", 
+                "particle physics", 
+                "nuclear physics", 
+                "atomic physics", 
+                "molecular physics", 
+                "condensed matter physics", 
+                "solid state physics", 
+                "fluid dynamics", 
+                "plasma physics", "astrophysics", "cosmology", "geophysics", "biophysics", "medical physics", "chemical physics", "mathematical physics", "computational physics", "accelerator physics", "atmospheric physics", "space physics", "materials science", "photonics", "cryogenics", "chaos theory", "nonlinear dynamics", "string theory", "gravitational physics", "high-energy physics", "low-temperature physics", "mesoscopic physics", "nanotechnology", "quantum computing", "quantum information", "quantum optics", "atomic molecular and optical physics", "soft matter physics", "polymer physics", "physics of complex systems", "econophysics", "astroparticle physics", "plasma astrophysics", "stellar physics", "extragalactic astronomy", "celestial mechanics", "radio astronomy", "semiconductor physics", "superconductivity", "magnetism", "surface physics", "neutrino physics", "dark matter physics", "dark energy physics", "gravitational wave astronomy", "spectroscopy", "ultrasonics", "rheology", "metrology", "detector physics", "radiation physics", "reactor physics", 
+                "fusion physics", 
+                "ballistics",
+                "acoustics engineering",
+                "optical engineering",
+                "electrical engineering",
+                "mechanical engineering",
+                "civil engineering",
+                "aerospace engineering",
+                "chemical engineering",
+                "biomedical engineering",
+                "environmental engineering",
+                "materials engineering",
+                "nuclear engineering",
+                "robotics engineering",
+                "geotechnical engineering",
+                "structural engineering",   
+                "transportation engineering",       
+                "marine engineering",
+                "petroleum engineering",    
+                "mining engineering",
+                "industrial engineering",
+                "systems engineering",  
+                "software engineering", 
+                "telecommunications engineering",
+                "control engineering",
+                "mechatronics engineering",
+                "energy engineering",
+                "agricultural engineering",
+                "automotive engineering",
+                "bioprocess engineering",
+                "construction engineering",
+                "fire protection engineering",
+                "geological engineering",
+                "hydraulic engineering",
+                "industrial design engineering",
+                "instrumentation engineering",
+                "landscape architecture",   
+                "marine architecture",
+                "mineral processing engineering",   
+                "nuclear fusion engineering",
+                "petrochemical engineering",
+                "power systems engineering",
+                "quality engineering",
+                "renewable energy engineering",
+                "safety engineering",
+                "software development engineering",
+                "telemetry engineering",
+            ];
+            
+            const filteredSuggestions = scienceSuggestions.filter(suggestion => 
+                suggestion.toLowerCase().includes(input.value.toLowerCase())
+            );
+            
+            if (filteredSuggestions.length === 0) {
+                suggestions.style.display = 'none';
+                return;
+            }
+            
+            suggestions.innerHTML = '';
+            filteredSuggestions.forEach(suggestion => {
+                const item = document.createElement('div');
+                item.classList.add('suggestion-item');
+                item.innerHTML = `<i class="fas fa-search"></i> ${suggestion}`;
+                
+                item.addEventListener('click', () => {
+                    input.value = suggestion;
+                    suggestions.style.display = 'none';
+                    document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+                });
+                
+                suggestions.appendChild(item);
+            });
+            
+            suggestions.style.display = 'block';
+        }
+        
+        // Perform search
+        function performSearch(query) {
+            if (!query.trim()) return;
+            
+            addToSearchHistory(query);
+            
+            // Use DuckDuckGo search API
+            const searchUrl = `https://google.com/?q=${encodeURIComponent(query)}`;
+            window.open(searchUrl, '_blank');
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create background
+            createScienceBackground();
+            
+            // Load search history
+            updateHistoryDisplay();
+            
+            // Setup search form
+            document.getElementById('searchForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const query = document.getElementById('searchInput').value.trim();
+                if (query) {
+                    performSearch(query);
+                }
+            });
+            
+            // Setup quick links
+            document.querySelectorAll('.quick-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    const searchTerms = {
+                        'Quantum Physics': 'quantum physics research',
+                        'Biotechnology': 'biotechnology advancements',
+                        'Space Exploration': 'space exploration news',
+                        'Climate Science': 'climate science research',
+                        'Artificial Intelligence': 'artificial intelligence in science',
+                        'Quantum optics': 'quantum optics research',
+                        'Astrophysics': 'astrophysics discoveries',
+                        'Genetic engineering': 'genetic engineering techniques',
+                        'Nanotechnology advancements': 'nanotechnology advancements',
+                        'Renewable energy solutions': 'renewable energy technologies',
+                        'Genetics and DNA research': 'genetics and DNA research',
+                        'Astrophysics discoveries': 'astrophysics discoveries',
+                        'Robotics engineering': 'robotics engineering',
+                        'Environmental Science': 'environmental science research',
+                        'Marine Biology': 'marine biology research',
+                        'Neuroscience breakthroughs': 'neuroscience breakthroughs',
+                        'Materials Science Innovations': 'materials science innovations',
+                        'Particle Physics': 'particle physics research',
+                    };
+                    
+                    const searchTerm = searchTerms[this.textContent];
+                    if (searchTerm) {
+                        document.getElementById('searchInput').value = searchTerm;
+                        document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+                    }
+                });
+            });
+            
+            // Setup search input events
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', showSuggestions);
+            searchInput.addEventListener('focus', showSuggestions);
+            
+            // Clicking outside hides suggestions
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.search-container')) {
+                    document.getElementById('searchSuggestions').style.display = 'none';
+                }
+            });
+            
+            // Clear history button
+            document.getElementById('clearHistory').addEventListener('click', clearSearchHistory);
+        });
+    </script>
+      <script>
+document.addEventListener("contextmenu", (event) => event.preventDefault());
+document.addEventListener("keydown", (event) => {
+    if (event.key === "F12" || (event.ctrlKey && event.shiftKey && event.key === "I")) {
+        event.preventDefault();
+    }
+});
+</script>  <script>
+document.addEventListener("contextmenu", (event) => event.preventDefault());
+document.addEventListener("keydown", (event) => {
+    if (event.key === "F12" || (event.ctrlKey && event.shiftKey && event.key === "I")) {
+        event.preventDefault();
+    }
+});
+</script>
+</body>
+</html>
